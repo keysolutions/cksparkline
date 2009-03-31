@@ -34,3 +34,5 @@ Example Usage
 
     [parentView addSubview:sparkline];
     [sparkline release];
+    
+Be sure to include CKSparkline.m and CKSparkline.h into your application project.
