@@ -81,7 +81,10 @@
 
 - (void)dealloc {
 	[data release];
-	[computedData release];
+	[computedData release];	
+	[lineColor release];
+	[highlightedLineColor release];
+	
     [super dealloc];
 }
 
