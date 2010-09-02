@@ -70,6 +70,8 @@
 
 	[data release];
 	data = [newData retain];
+	
+	[self setNeedsDisplay];
 }
 
 
