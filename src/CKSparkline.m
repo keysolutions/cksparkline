@@ -18,7 +18,7 @@
 		self.backgroundColor = [UIColor clearColor];
         self.lineColor = [UIColor colorWithWhite:0.65 alpha:1.0];
 		self.highlightedLineColor = [UIColor whiteColor];
-	self.lineWidth = 1;
+		self.lineWidth = 1.0;
     }
 	
     return self;
