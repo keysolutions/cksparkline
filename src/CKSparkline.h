@@ -19,6 +19,7 @@
 @property (readonly) NSArray *computedData;
 
 
+- (void)initializeDefaults;
 - (void)setSelected:(BOOL)isSelected;
 - (void)setData:(NSArray *)newData;
 

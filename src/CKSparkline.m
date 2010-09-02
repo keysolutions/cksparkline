@@ -11,29 +11,45 @@
 @synthesize computedData;
 
 
-- (id)initWithFrame:(CGRect)frame {
-	
+- (id)initWithFrame:(CGRect)frame
+{
     if (self = [super initWithFrame:frame]) {
-		self.selected = NO;
-		self.backgroundColor = [UIColor clearColor];
-        self.lineColor = [UIColor colorWithWhite:0.65 alpha:1.0];
-		self.highlightedLineColor = [UIColor whiteColor];
-		self.lineWidth = 1.0;
+		[self initializeDefaults];
     }
 	
     return self;
 }
 
 
-- (void)setSelected:(BOOL)isSelected {
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+		[self initializeDefaults];
+    }
 	
+    return self;
+}
+
+
+- (void)initializeDefaults
+{
+	self.selected = NO;
+	self.backgroundColor = [UIColor clearColor];
+	self.lineColor = [UIColor colorWithWhite:0.65 alpha:1.0];
+	self.highlightedLineColor = [UIColor whiteColor];
+	self.lineWidth = 1.0;
+}
+
+
+- (void)setSelected:(BOOL)isSelected
+{
 	selected = isSelected;	
 	[self setNeedsDisplay];
 }
 
 
-- (void)setData:(NSArray *)newData {
-
+- (void)setData:(NSArray *)newData
+{
 	CGFloat max = 0.0;
 	CGFloat min = FLT_MAX;
 	NSMutableArray *mutableComputedData = [[NSMutableArray alloc] initWithCapacity:[newData count]];
@@ -57,8 +73,8 @@
 }
 
 
-- (void)drawRect:(CGRect)rect {
-    
+- (void)drawRect:(CGRect)rect
+{
 	if ([self.computedData count] < 1)
 		return;
 	
@@ -82,7 +98,8 @@
 }
 
 
-- (void)dealloc {
+- (void)dealloc
+{
 	[data release];
 	[computedData release];	
 	[lineColor release];
