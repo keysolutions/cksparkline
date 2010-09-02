@@ -6,6 +6,7 @@
 @synthesize selected;
 @synthesize lineColor;
 @synthesize highlightedLineColor;
+@synthesize lineWidth;
 @synthesize data;
 @synthesize computedData;
 
@@ -17,6 +18,7 @@
 		self.backgroundColor = [UIColor clearColor];
         self.lineColor = [UIColor colorWithWhite:0.65 alpha:1.0];
 		self.highlightedLineColor = [UIColor whiteColor];
+	self.lineWidth = 1;
     }
 	
     return self;
@@ -66,6 +68,7 @@
 	
 	CGColorRef strokeColor = [(self.selected ? self.highlightedLineColor : self.lineColor) CGColor];
 	CGContextSetStrokeColorWithColor(context, strokeColor);
+	CGContextSetLineWidth(context, lineWidth);
 
 	CGContextBeginPath(context);				
 	CGContextMoveToPoint(context, 0.0, maxY - maxY * [[computedData objectAtIndex:0] floatValue]);

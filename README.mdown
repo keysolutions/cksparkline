@@ -12,6 +12,8 @@ Attributes
 
 - *highlightedColor (property)* sets the color to be used for line display when the view is selected. Color is supplied as a UIColor object.
 
+- *lineWidth (property)* sets the width used for line display.
+
 - *selected (property)* sets if the view is selected. BOOL YES or NO.
 
 

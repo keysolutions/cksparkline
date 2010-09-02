@@ -7,12 +7,14 @@
 	UIColor *highlightedLineColor;
 	NSArray *data;
 	NSArray *computedData;
+	int lineWidth;
 }
 
 
 @property (readonly) BOOL selected;
 @property (nonatomic, retain) UIColor *lineColor;
 @property (nonatomic, retain) UIColor *highlightedLineColor;
+@property (nonatomic) int lineWidth;
 @property (readonly) NSArray *data;
 @property (readonly) NSArray *computedData;
 
