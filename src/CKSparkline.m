@@ -86,7 +86,7 @@
 	
 	CGColorRef strokeColor = [(self.selected ? self.highlightedLineColor : self.lineColor) CGColor];
 	CGContextSetStrokeColorWithColor(context, strokeColor);
-	CGContextSetLineWidth(context, lineWidth);
+	CGContextSetLineWidth(context, self.lineWidth);
 
 	CGContextBeginPath(context);				
 	CGContextMoveToPoint(context, 0.0, maxY - maxY * [[computedData objectAtIndex:0] floatValue]);
