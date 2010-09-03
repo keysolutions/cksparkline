@@ -1,11 +1,3 @@
-//
-//  SparklineViewerAppDelegate.m
-//  SparklineViewer
-//
-//  Created by Adam Keys on 10-09-02.
-//  Copyright Connex Keysolutions Inc. 2010. All rights reserved.
-//
-
 #import "SparklineViewerAppDelegate.h"
 #import "SparklineViewerViewController.h"
 
