@@ -81,10 +81,10 @@
 		return;
 	
 	CGContextRef context = UIGraphicsGetCurrentContext();
-    CGRect lineRect = CGRectInset(rect, self.lineWidth / 2, self.lineWidth/2);
-    CGFloat minX = CGRectGetMinX(lineRect);
+	CGRect lineRect = CGRectInset(rect, self.lineWidth / 2, self.lineWidth/2);
+	CGFloat minX = CGRectGetMinX(lineRect);
 	CGFloat maxX = CGRectGetMaxX(lineRect);
-    CGFloat minY = CGRectGetMinY(lineRect);
+	CGFloat minY = CGRectGetMinY(lineRect);
 	CGFloat maxY = CGRectGetMaxY(lineRect);
 	
 	CGColorRef strokeColor = [(self.selected ? self.highlightedLineColor : self.lineColor) CGColor];
