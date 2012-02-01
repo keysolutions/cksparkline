@@ -81,19 +81,23 @@
 		return;
 	
 	CGContextRef context = UIGraphicsGetCurrentContext();
-	CGFloat maxX = CGRectGetMaxX(rect);
-	CGFloat maxY = CGRectGetMaxY(rect);
+    CGRect lineRect = CGRectInset(rect, self.lineWidth / 2, self.lineWidth/2);
+    CGFloat minX = CGRectGetMinX(lineRect);
+	CGFloat maxX = CGRectGetMaxX(lineRect);
+    CGFloat minY = CGRectGetMinY(lineRect);
+	CGFloat maxY = CGRectGetMaxY(lineRect);
 	
 	CGColorRef strokeColor = [(self.selected ? self.highlightedLineColor : self.lineColor) CGColor];
 	CGContextSetStrokeColorWithColor(context, strokeColor);
 	CGContextSetLineWidth(context, self.lineWidth);
 
 	CGContextBeginPath(context);				
-	CGContextMoveToPoint(context, 0.0, maxY - maxY * [[computedData objectAtIndex:0] floatValue]);
+	CGContextMoveToPoint(context, minX, maxY - (maxY - minY) * [[computedData objectAtIndex:0] floatValue]);
 	
 	for (int i = 1; i < [self.computedData count]; i++) {
-		CGContextAddLineToPoint(context, maxX * ((CGFloat)i / ([self.computedData count] - 1)),
-								maxY - maxY * [[self.computedData objectAtIndex:i] floatValue]);
+		CGContextAddLineToPoint(context, 
+                                minX + (maxX - minX) * ((CGFloat)i / ([self.computedData count] - 1)),
+								maxY - (maxY - minY) * [[self.computedData objectAtIndex:i] floatValue]);
 	}
 	
 	CGContextStrokePath(context);
