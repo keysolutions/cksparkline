@@ -95,9 +95,7 @@
 	CGContextMoveToPoint(context, minX, maxY - (maxY - minY) * [[computedData objectAtIndex:0] floatValue]);
 	
 	for (int i = 1; i < [self.computedData count]; i++) {
-		CGContextAddLineToPoint(context, 
-                                minX + (maxX - minX) * ((CGFloat)i / ([self.computedData count] - 1)),
-								maxY - (maxY - minY) * [[self.computedData objectAtIndex:i] floatValue]);
+		CGContextAddLineToPoint(context, minX + (maxX - minX) * ((CGFloat)i / ([self.computedData count] - 1)), maxY - (maxY - minY) * [[self.computedData objectAtIndex:i] floatValue]);
 	}
 	
 	CGContextStrokePath(context);
