@@ -20,7 +20,6 @@
     return self;
 }
 
-
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
@@ -29,7 +28,6 @@
 	
     return self;
 }
-
 
 - (void)initializeDefaults
 {
@@ -40,13 +38,11 @@
 	self.lineWidth = 1.0;
 }
 
-
 - (void)setSelected:(BOOL)isSelected
 {
 	selected = isSelected;	
 	[self setNeedsDisplay];
 }
-
 
 - (void)setData:(NSArray *)newData
 {
@@ -62,18 +58,18 @@
 	for (NSNumber *dataValue in newData) {
 		NSNumber *value = [[NSNumber alloc] initWithFloat:([dataValue floatValue] - min) / (max - min + 1.0)];
 		[mutableComputedData addObject:value];
-		[value release];
+
+		ARC_RELEASE(value);
 	}
 	
-	[computedData release];	
+	ARC_RELEASE(computedData);	
 	computedData = mutableComputedData;
 
-	[data release];
-	data = [newData retain];
+	ARC_RELEASE(data);
+	data = ARC_RETAIN(newData);
 	
 	[self setNeedsDisplay];
 }
-
 
 - (void)drawRect:(CGRect)rect
 {
@@ -101,16 +97,16 @@
 	CGContextStrokePath(context);
 }
 
-
 - (void)dealloc
-{
+{	
+#if ! __has_feature(objc_arc)
+    [super dealloc];
+    
 	[data release];
 	[computedData release];	
 	[lineColor release];
 	[highlightedLineColor release];
-	
-    [super dealloc];
+#endif
 }
-
 
 @end

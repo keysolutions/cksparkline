@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-
+#import "arc.h"
 
 @interface CKSparkline : UIView {
 	BOOL selected;
@@ -10,17 +10,14 @@
 	CGFloat lineWidth;
 }
 
-
 @property (readonly) BOOL selected;
 @property (nonatomic, retain) UIColor *lineColor;
 @property (nonatomic, retain) UIColor *highlightedLineColor;
 @property (nonatomic) CGFloat lineWidth;
-@property (readonly) NSArray *data;
+@property (nonatomic, retain) NSArray *data;
 @property (readonly) NSArray *computedData;
-
 
 - (void)initializeDefaults;
 - (void)setSelected:(BOOL)isSelected;
-- (void)setData:(NSArray *)newData;
 
 @end

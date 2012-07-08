@@ -31,8 +31,6 @@
 
 - (void)dealloc
 {
-	[sparkline release];
-    [super dealloc];
 }
 
 @end
