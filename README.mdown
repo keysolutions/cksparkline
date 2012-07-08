@@ -20,6 +20,8 @@ Attributes
 Example Usage
 -------------
 
+Include CKSparkline.m and CKSparkline.h in your application's Xcode project.
+
     CKSparkline *sparkline = [[CKSparkline alloc]
         initWithFrame:CGRectMake(0.0, 0.0, 100.0, 30.0)];
 
@@ -36,4 +38,3 @@ Example Usage
 
     [parentView addSubview:sparkline];
     
-Be sure to include CKSparkline.m and CKSparkline.h into your application project.
