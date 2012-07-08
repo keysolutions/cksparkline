@@ -2,7 +2,7 @@
 #import "CKSparkline.h"
 
 @interface SparklineViewerViewController : UIViewController {
-	CKSparkline *sparkline;
+    CKSparkline *sparkline;
 }
 
 @property (nonatomic, retain) IBOutlet CKSparkline *sparkline;

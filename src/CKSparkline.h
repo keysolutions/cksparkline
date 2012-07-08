@@ -2,14 +2,14 @@
 #import "arc.h"
 
 @interface CKSparkline : UIView {
-	BOOL selected;
+    BOOL selected;
 
-	UIColor *lineColor;
-	CGFloat lineWidth;
-	UIColor *highlightedLineColor;
-	
+    UIColor *lineColor;
+    CGFloat lineWidth;
+    UIColor *highlightedLineColor;
+    
     NSArray *data;
-	NSArray *computedData;
+    NSArray *computedData;
 }
 
 @property (readonly) BOOL selected;
