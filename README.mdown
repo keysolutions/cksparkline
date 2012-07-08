@@ -16,6 +16,8 @@ Attributes
 
 - *selected (property)* sets if the view is selected. BOOL YES or NO.
 
+- *drawPoints* draws an ellipse at each data point, with the final point drawn in red.
+
 
 Example Usage
 -------------
