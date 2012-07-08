@@ -1,15 +1,6 @@
 #import "CKSparkline.h"
 
-
 @implementation CKSparkline
-
-@synthesize selected;
-@synthesize lineColor;
-@synthesize highlightedLineColor;
-@synthesize lineWidth;
-@synthesize data;
-@synthesize computedData;
-
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -29,6 +20,13 @@
     return self;
 }
 
+#pragma mark - View Configuration
+
+@synthesize selected;
+@synthesize lineColor;
+@synthesize lineWidth;
+@synthesize highlightedLineColor;
+
 - (void)initializeDefaults
 {
 	self.selected = NO;
@@ -44,32 +42,45 @@
 	[self setNeedsDisplay];
 }
 
+#pragma mark - Data Management
+
+@synthesize data;
+@synthesize computedData;
+
 - (void)setData:(NSArray *)newData
 {
-	CGFloat max = 0.0;
-	CGFloat min = FLT_MAX;
-	NSMutableArray *mutableComputedData = [[NSMutableArray alloc] initWithCapacity:[newData count]];
-
-	for (NSNumber *dataValue in newData) {
-		min = MIN([dataValue floatValue], min);
-		max = MAX([dataValue floatValue], max);
-	}
-	
-	for (NSNumber *dataValue in newData) {
-		NSNumber *value = [[NSNumber alloc] initWithFloat:([dataValue floatValue] - min) / (max - min + 1.0)];
-		[mutableComputedData addObject:value];
-
-		ARC_RELEASE(value);
-	}
-	
-	ARC_RELEASE(computedData);	
-	computedData = mutableComputedData;
-
 	ARC_RELEASE(data);
 	data = ARC_RETAIN(newData);
-	
+    
+	[self recalculateComputedData];
 	[self setNeedsDisplay];
 }
+
+- (void)recalculateComputedData
+{
+    CGFloat max = 0.0;
+    CGFloat min = FLT_MAX;
+    NSMutableArray *mutableComputedData = [[NSMutableArray alloc] initWithCapacity:[self.data count]];
+    
+    for (NSNumber *dataValue in self.data) {
+        min = MIN([dataValue floatValue], min);
+        max = MAX([dataValue floatValue], max);
+    }
+    
+    for (NSNumber *dataValue in self.data) {
+        CGFloat floatValue = ([dataValue floatValue] - min) / (max - min + 1.0);
+        NSNumber *value = [[NSNumber alloc] initWithFloat:floatValue];
+        
+        [mutableComputedData addObject:value];
+        
+        ARC_RELEASE(value);
+    }
+    
+    ARC_RELEASE(computedData);	
+    computedData = mutableComputedData;
+}
+
+#pragma mark - Drawing
 
 - (void)drawRect:(CGRect)rect
 {
@@ -77,7 +88,7 @@
 		return;
 	
 	CGContextRef context = UIGraphicsGetCurrentContext();
-	CGRect lineRect = CGRectInset(rect, self.lineWidth / 2, self.lineWidth/2);
+	CGRect lineRect = CGRectInset(rect, self.lineWidth / 2, self.lineWidth / 2);
 	CGFloat minX = CGRectGetMinX(lineRect);
 	CGFloat maxX = CGRectGetMaxX(lineRect);
 	CGFloat minY = CGRectGetMinY(lineRect);
@@ -96,6 +107,8 @@
 	
 	CGContextStrokePath(context);
 }
+
+#pragma mark -
 
 - (void)dealloc
 {	

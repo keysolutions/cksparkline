@@ -3,11 +3,13 @@
 
 @interface CKSparkline : UIView {
 	BOOL selected;
+
 	UIColor *lineColor;
-	UIColor *highlightedLineColor;
-	NSArray *data;
-	NSArray *computedData;
 	CGFloat lineWidth;
+	UIColor *highlightedLineColor;
+	
+    NSArray *data;
+	NSArray *computedData;
 }
 
 @property (readonly) BOOL selected;
@@ -19,5 +21,6 @@
 
 - (void)initializeDefaults;
 - (void)setSelected:(BOOL)isSelected;
+- (void)recalculateComputedData;
 
 @end
