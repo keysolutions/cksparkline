@@ -18,6 +18,9 @@
     
     // Enable display of data point dots
     self.sparkline.drawPoints = YES;
+    
+    // Enable display of area below line
+    self.sparkline.drawArea = YES;
 
     // Create an array of data
     self.sparkline.data = [NSArray arrayWithObjects:

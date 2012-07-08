@@ -27,6 +27,7 @@
 @synthesize lineWidth;
 @synthesize highlightedLineColor;
 @synthesize drawPoints;
+@synthesize drawArea;
 
 - (void)initializeDefaults
 {
@@ -36,6 +37,7 @@
     self.highlightedLineColor = [UIColor whiteColor];
     self.lineWidth = 1.0;
     self.drawPoints = NO;
+    self.drawArea = NO;
 }
 
 - (void)setSelected:(BOOL)isSelected
@@ -93,14 +95,23 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGColorRef displayColor = [(self.selected ? self.highlightedLineColor : self.lineColor) CGColor];
-    CGContextSetStrokeColorWithColor(context, displayColor);
-    CGContextSetFillColorWithColor(context, displayColor);
+    CGContextSetStrokeColorWithColor(context, displayColor);    
     CGContextSetLineWidth(context, self.lineWidth);
     
     [self updateBoundary];
+    
+    if (self.drawArea) {
+        UIColor *displayColorInstance = [UIColor colorWithCGColor:displayColor];
+        UIColor *areaColor = [displayColorInstance colorWithAlphaComponent:0.4];
+        
+        CGContextSetFillColorWithColor(context, [areaColor CGColor]);
+        [self drawAreaInRect:rect withContext:context];
+    }
+    
     [self drawLineInRect:rect withContext:context];
     
     if (self.drawPoints) {
+        CGContextSetFillColorWithColor(context, displayColor);
         [self drawPointsInRect:rect withContext:context];
     }
 }
@@ -117,6 +128,26 @@
     }
     
     CGContextStrokePath(context);    
+    CGContextRestoreGState(context);
+}
+
+- (void)drawAreaInRect:(CGRect)rect withContext:(CGContextRef)context
+{
+    CGPoint point;
+    
+    CGContextSaveGState(context);
+    CGContextBeginPath(context);                
+    CGContextMoveToPoint(context, boundary.min.x, boundary.max.y - (boundary.max.y - boundary.min.y) * [[computedData objectAtIndex:0] floatValue]);
+    
+    for (int i = 1; i < [self.computedData count]; i++) {
+        point = calculatePosition(self.computedData, i, &boundary);
+        CGContextAddLineToPoint(context, point.x, point.y);        
+    }
+    
+    CGContextAddLineToPoint(context, point.x, CGRectGetMaxY(rect));
+    CGContextAddLineToPoint(context, boundary.min.x, CGRectGetMaxY(rect));
+    
+    CGContextFillPath(context);
     CGContextRestoreGState(context);
 }
 

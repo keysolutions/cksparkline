@@ -45,6 +45,7 @@ static inline CGPoint calculatePosition(NSArray *data, int index, CKBoundary *bo
 @property (nonatomic, retain) UIColor *highlightedLineColor;
 @property (nonatomic) CGFloat lineWidth;
 @property (nonatomic) BOOL drawPoints;
+@property (nonatomic) BOOL drawArea;
 @property (nonatomic, retain) NSArray *data;
 @property (readonly) NSArray *computedData;
 
@@ -54,6 +55,7 @@ static inline CGPoint calculatePosition(NSArray *data, int index, CKBoundary *bo
 - (void)recalculateComputedData;
 
 - (void)drawLineInRect:(CGRect)rect withContext:(CGContextRef)context;
+- (void)drawAreaInRect:(CGRect)rect withContext:(CGContextRef)context;
 - (void)drawPointsInRect:(CGRect)rect withContext:(CGContextRef)context;
 - (void)updateBoundary;
 
