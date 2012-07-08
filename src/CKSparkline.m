@@ -126,6 +126,8 @@
     
     CGFloat pointSize = calculatePointSize(self.lineWidth);
     
+    CGContextFillEllipseInRect(context, CGRectMake(boundary.min.x - pointSize / 2.0, (boundary.max.y - (boundary.max.y - boundary.min.y) * [[computedData objectAtIndex:0] floatValue]) - pointSize / 2.0, pointSize, pointSize));
+    
     for (int i = 1; i < [self.computedData count]; i++) {
         if (i == [self.computedData count] - 1) {
             CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
