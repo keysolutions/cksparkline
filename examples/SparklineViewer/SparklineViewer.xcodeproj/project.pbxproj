@@ -31,7 +31,6 @@
 		28D7ACF70DDB3853001CB0EB /* SparklineViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparklineViewerViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* SparklineViewer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparklineViewer_Prefix.pch; sourceTree = "<group>"; };
-		66BAC08715A94F5000DFEB84 /* arc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arc.h; sourceTree = "<group>"; };
 		66E9F8181230349C00CCBCD3 /* CKSparkline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSparkline.h; path = ../../src/CKSparkline.h; sourceTree = SOURCE_ROOT; };
 		66E9F8191230349C00CCBCD3 /* CKSparkline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CKSparkline.m; path = ../../src/CKSparkline.m; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* SparklineViewer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SparklineViewer-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -60,7 +59,6 @@
 				1D3623250D0F684500981E51 /* SparklineViewerAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* SparklineViewerViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* SparklineViewerViewController.m */,
-				66BAC08715A94F5000DFEB84 /* arc.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

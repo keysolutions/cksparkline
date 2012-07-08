@@ -49,8 +49,8 @@
 
 - (void)setData:(NSArray *)newData
 {
-    ARC_RELEASE(data);
-    data = ARC_RETAIN(newData);
+    CK_ARC_RELEASE(data);
+    data = CK_ARC_RETAIN(newData);
     
     [self recalculateComputedData];
     [self setNeedsDisplay];
@@ -73,10 +73,10 @@
         
         [mutableComputedData addObject:value];
         
-        ARC_RELEASE(value);
+        CK_ARC_RELEASE(value);
     }
     
-    ARC_RELEASE(computedData);    
+    CK_ARC_RELEASE(computedData);    
     computedData = mutableComputedData;
 }
 

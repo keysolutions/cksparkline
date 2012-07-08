@@ -1,5 +1,21 @@
 #import <UIKit/UIKit.h>
-#import "arc.h"
+
+// Define ARC_RETAIN/ARC_RELEASE macros for conditional support of the ARC 
+// memory management features. When ARC is enabled, the value is assigned
+// to itself to silence compiler warnings.
+
+#if ! __has_feature(objc_arc)
+
+#define CK_ARC_RETAIN(o) [(o) retain]
+#define CK_ARC_RELEASE(o) [(o) release]
+
+#else
+
+#define CK_ARC_RETAIN(o) (o = o)
+#define CK_ARC_RELEASE(o) (o = o)
+
+#endif
+
 
 @interface CKSparkline : UIView {
     BOOL selected;
