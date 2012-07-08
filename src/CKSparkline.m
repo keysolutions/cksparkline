@@ -26,6 +26,7 @@
 @synthesize lineColor;
 @synthesize lineWidth;
 @synthesize highlightedLineColor;
+@synthesize drawPoints;
 
 - (void)initializeDefaults
 {
@@ -34,6 +35,7 @@
     self.lineColor = [UIColor colorWithWhite:0.65 alpha:1.0];
     self.highlightedLineColor = [UIColor whiteColor];
     self.lineWidth = 1.0;
+    self.drawPoints = NO;
 }
 
 - (void)setSelected:(BOOL)isSelected
@@ -84,28 +86,86 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    if ([self.computedData count] < 1)
+    if ([self.computedData count] < 1) {
         return;
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGRect lineRect = CGRectInset(rect, self.lineWidth / 2, self.lineWidth / 2);
-    CGFloat minX = CGRectGetMinX(lineRect);
-    CGFloat maxX = CGRectGetMaxX(lineRect);
-    CGFloat minY = CGRectGetMinY(lineRect);
-    CGFloat maxY = CGRectGetMaxY(lineRect);
-    
-    CGColorRef strokeColor = [(self.selected ? self.highlightedLineColor : self.lineColor) CGColor];
-    CGContextSetStrokeColorWithColor(context, strokeColor);
-    CGContextSetLineWidth(context, self.lineWidth);
-
-    CGContextBeginPath(context);                
-    CGContextMoveToPoint(context, minX, maxY - (maxY - minY) * [[computedData objectAtIndex:0] floatValue]);
-    
-    for (int i = 1; i < [self.computedData count]; i++) {
-        CGContextAddLineToPoint(context, minX + (maxX - minX) * ((CGFloat)i / ([self.computedData count] - 1)), maxY - (maxY - minY) * [[self.computedData objectAtIndex:i] floatValue]);
     }
     
-    CGContextStrokePath(context);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGColorRef displayColor = [(self.selected ? self.highlightedLineColor : self.lineColor) CGColor];
+    CGContextSetStrokeColorWithColor(context, displayColor);
+    CGContextSetFillColorWithColor(context, displayColor);
+    CGContextSetLineWidth(context, self.lineWidth);
+    
+    [self updateBoundary];
+    [self drawLineInRect:rect withContext:context];
+    
+    if (self.drawPoints) {
+        [self drawPointsInRect:rect withContext:context];
+    }
+}
+
+- (void)drawLineInRect:(CGRect)rect withContext:(CGContextRef)context
+{
+    CGContextSaveGState(context);
+    CGContextBeginPath(context);                
+    CGContextMoveToPoint(context, boundary.min.x, boundary.max.y - (boundary.max.y - boundary.min.y) * [[computedData objectAtIndex:0] floatValue]);
+    
+    for (int i = 1; i < [self.computedData count]; i++) {
+        CGPoint point = findPosition(self.computedData, i, &boundary);
+        CGContextAddLineToPoint(context, point.x, point.y);        
+    }
+    
+    CGContextStrokePath(context);    
+    CGContextRestoreGState(context);
+}
+
+- (void)drawPointsInRect:(CGRect)rect withContext:(CGContextRef)context
+{
+    CGContextSaveGState(context);
+    
+    CGFloat pointSize = findPointSize(self.lineWidth);
+    
+    for (int i = 1; i < [self.computedData count]; i++) {
+        if (i == [self.computedData count] - 1) {
+            CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
+        }
+        
+        CGPoint point = findPosition(self.computedData, i, &boundary);
+        CGContextFillEllipseInRect(context, CGRectMake(point.x - pointSize / 2.0, point.y - pointSize / 2.0, pointSize, pointSize));
+    }
+    
+    CGContextRestoreGState(context);
+}
+
+- (void)updateBoundary
+{
+    CGRect lineRect;
+    CGFloat lineSize = self.lineWidth;
+    CGFloat pointSize = findPointSize(lineSize);
+    
+    if (self.drawPoints) {
+        lineRect = CGRectInset(self.bounds, lineSize / 2.0 + pointSize, lineSize / 2.0 + pointSize);
+    } else {
+        lineRect = CGRectInset(self.bounds, lineSize, lineSize);
+    }
+    
+    CKBoundary lineBoundary = {
+        { CGRectGetMinX(lineRect), CGRectGetMinY(lineRect) },
+        { CGRectGetMaxX(lineRect), CGRectGetMaxY(lineRect) }
+    };
+    
+    boundary = lineBoundary;
+}
+
+static inline CGFloat findPointSize(CGFloat lineWidth)
+{
+    return lineWidth + log(20.0 * lineWidth);
+}
+
+static inline CGPoint findPosition(NSArray *data, int index, CKBoundary *boundary)
+{
+    return CGPointMake(boundary->min.x + (boundary->max.x - boundary->min.x) * ((CGFloat)index / ([data count] - 1)), boundary->max.y - (boundary->max.y - boundary->min.y) * [[data objectAtIndex:index] floatValue]);
 }
 
 #pragma mark -

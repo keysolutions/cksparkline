@@ -15,6 +15,9 @@
     
     // Set the line width
     self.sparkline.lineWidth = 2.0;
+    
+    // Enable display of data point dots
+    self.sparkline.drawPoints = YES;
 
     // Create an array of data
     self.sparkline.data = [NSArray arrayWithObjects:
