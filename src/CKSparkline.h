@@ -23,8 +23,8 @@ typedef struct
     CGPoint max;
 } CKBoundary;
 
-static inline CGFloat findPointSize(CGFloat lineWidth);
-static inline CGPoint findPosition(NSArray *data, int index, CKBoundary *boundary);
+static inline CGFloat calculatePointSize(CGFloat lineWidth);
+static inline CGPoint calculatePosition(NSArray *data, int index, CKBoundary *boundary);
 
 @interface CKSparkline : UIView {
     BOOL selected;

@@ -112,7 +112,7 @@
     CGContextMoveToPoint(context, boundary.min.x, boundary.max.y - (boundary.max.y - boundary.min.y) * [[computedData objectAtIndex:0] floatValue]);
     
     for (int i = 1; i < [self.computedData count]; i++) {
-        CGPoint point = findPosition(self.computedData, i, &boundary);
+        CGPoint point = calculatePosition(self.computedData, i, &boundary);
         CGContextAddLineToPoint(context, point.x, point.y);        
     }
     
@@ -124,14 +124,14 @@
 {
     CGContextSaveGState(context);
     
-    CGFloat pointSize = findPointSize(self.lineWidth);
+    CGFloat pointSize = calculatePointSize(self.lineWidth);
     
     for (int i = 1; i < [self.computedData count]; i++) {
         if (i == [self.computedData count] - 1) {
             CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
         }
         
-        CGPoint point = findPosition(self.computedData, i, &boundary);
+        CGPoint point = calculatePosition(self.computedData, i, &boundary);
         CGContextFillEllipseInRect(context, CGRectMake(point.x - pointSize / 2.0, point.y - pointSize / 2.0, pointSize, pointSize));
     }
     
@@ -142,7 +142,7 @@
 {
     CGRect lineRect;
     CGFloat lineSize = self.lineWidth;
-    CGFloat pointSize = findPointSize(lineSize);
+    CGFloat pointSize = calculatePointSize(lineSize);
     
     if (self.drawPoints) {
         lineRect = CGRectInset(self.bounds, lineSize / 2.0 + pointSize, lineSize / 2.0 + pointSize);
@@ -158,12 +158,14 @@
     boundary = lineBoundary;
 }
 
-static inline CGFloat findPointSize(CGFloat lineWidth)
+#pragma mark Helper Functions
+
+static inline CGFloat calculatePointSize(CGFloat lineWidth)
 {
     return lineWidth + log(20.0 * lineWidth);
 }
 
-static inline CGPoint findPosition(NSArray *data, int index, CKBoundary *boundary)
+static inline CGPoint calculatePosition(NSArray *data, int index, CKBoundary *boundary)
 {
     return CGPointMake(boundary->min.x + (boundary->max.x - boundary->min.x) * ((CGFloat)index / ([data count] - 1)), boundary->max.y - (boundary->max.y - boundary->min.y) * [[data objectAtIndex:index] floatValue]);
 }
