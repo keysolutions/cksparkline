@@ -12,8 +12,8 @@
 
 #else
 
-#define CK_ARC_RETAIN(o) (o = o)
-#define CK_ARC_RELEASE(o) (o = o)
+#define CK_ARC_RETAIN(o) o
+#define CK_ARC_RELEASE(o) (void)0
 
 #endif
 
